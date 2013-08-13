@@ -1,5 +1,7 @@
 {
-	"name": "BuildMonitor",
+	"name": "build-monitor",
+	"description": "Watch a continuous integration/build server and provide real-time feedback",
+	"author": "Tyler Akins <fidian@rumkin.com>",
 	"version": "0.1.0",
 	"dependencies": {
 		"fid-promise": "*",
