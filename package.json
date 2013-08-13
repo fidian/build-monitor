@@ -1,0 +1,21 @@
+{
+	"name": "BuildMonitor",
+	"version": "0.1.0",
+	"dependencies": {
+		"fid-promise": "*",
+		"OptionParser": "*",
+		"request": "*",
+		"yamljs": "*"
+	},
+	"devDependencies": {
+		"jslint": "*",
+		"fid-umd": "*"
+	},
+	"engines": {
+		"node": ">=0.8",
+		"npm": ">=1"
+	},
+	"scripts": {
+		"umd": "fid-umd lib/*.js lib/*/*.js"
+	}
+}

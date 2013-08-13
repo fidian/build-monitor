@@ -1,0 +1,138 @@
+input:
+    # This only works with Jenkins at the moment.
+    requestConfig:
+        # This object is used almost verbatim for node's request function.
+        # See that function for more information about possible parameters.
+        uri: https://build.bbymwl.com/jenkins/api/json
+        method: GET
+        headers:
+            # This demo Jenkins install is hiding behind some proxies.
+            # You can't get in unless you say the magic word.
+            X-Monitor: UpUpDownDownLeftRightLeftRightBASelectStart
+        timeout: 5000
+        strictSSL: false
+    delay: 5000
+    debug: false
+output:
+    # Every item in this array is another "output", which is a
+    # combination of a physical device and rules to govern the device.
+    -
+        name: Manager's Desk
+        debug: false
+        refresh: 60000
+        type: PhilipsHue
+        moduleConfig:
+            -
+                uri: http://10.42.0.57/api/215e650218227f72cbc061e3b301803/lights/1/state
+                debug: false
+        project: /^testProject_.*\-develop$/
+        rules:
+            # The first rule that matches here will be the one that is used.
+            # Make sure to add them in the right order to match your needs.
+            -
+                # When building, make the light purple
+                building: true
+                send:
+                    on: true
+                    hue: 50000
+                    sat: 254
+                    bri: 150
+            -
+                # On any type of failure, make the light red
+                success: false
+                send:
+                    on: true
+                    hue: 0
+                    sat: 254
+                    bri: 254
+            -
+                # Otherwise it's a success and turn off the light
+                send:
+                    on: false
+    -
+        name: Lights For Developers
+        debug: true
+        refresh: 60000
+        type: PhilipsHue
+        moduleConfig:
+            -
+                # John's desk
+                uri: http://10.42.0.57/api/215e650218227f72cbc061e3b301803/lights/3/state
+                debug: false
+            -
+                # Joe's desk
+                uri: http://10.42.0.57/api/215e650218227f72cbc061e3b301803/lights/2/state
+                debug: false
+        project: /^testProject_/
+        rules:
+            -
+                # When building, make the light purple
+                building: true
+                send:
+                    on: true
+                    hue: 50000
+                    sat: 254
+                    bri: 150
+            -
+                # On any type of failure, make the light red
+                success: false
+                send:
+                    on: true
+                    hue: 0
+                    sat: 254
+                    bri: 254
+            -
+                # Otherwise it's a success and make the light green
+                send:
+                    on: true
+                    xy: [0.4,0.525]
+                    bri: 1
+                    sat: 254
+    -
+        name: X10 Traffic Light - Red
+        type: Mochad
+        refresh: 60000
+        moduleConfig:
+            location: rf a2
+            debug: true
+        project: /^production-/
+        rules:
+            -
+                # Turn on with any failure
+                success: false
+                send: on
+            -
+                # Otherwise, off
+                send: off
+    -
+        name: X10 Traffic Light - Yellow
+        type: Mochad
+        refresh: 60000
+        moduleConfig:
+            location: rf a3
+            debug: true
+        project: /^production-/
+        rules:
+            -
+                # Turn on with any build
+                building: true
+                send: on
+            -
+                # Otherwise, off
+                send: off
+    -
+        name: X10 Traffic Light - Green
+        type: Mochad
+        refresh: 60000
+        moduleConfig:
+            location: rf a4
+            debug: true
+        project: /^production-/
+        rules:
+            -
+                # Turn off with any failures
+                success: false
+                send: off
+            -
+                # Otherwise, on
+                send: on
