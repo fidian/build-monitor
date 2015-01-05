@@ -16,12 +16,12 @@ Development Installation
 
 First, clone the repository somewhere you'd like to see it.  Next, you will need to get the submodules and packages from npm.  Finally, run the `setup_repository` script to finish getting git hooks and other tidbits.
 
-   git clone https://github.com/fidian/build-monitor.git
-   cd build-monitor
-   git submodule init
-   git submodule update
-   npm install
-   3rd_party/bare_repo/util/bin/setup_repository
+    git clone https://github.com/fidian/build-monitor.git
+    cd build-monitor
+    git submodule init
+    git submodule update
+    npm install
+    3rd_party/bare_repo/util/bin/setup_repository
 
 License
 -------
